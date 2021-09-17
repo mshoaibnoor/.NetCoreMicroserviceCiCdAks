@@ -32,7 +32,8 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '**Customer.Api/*.csproj'
-    arguments: '--no-restore'
+     arguments: '--configuration $(buildConfiguration) --no-restore'
+     modifyOutputPath: false
 
 
 
