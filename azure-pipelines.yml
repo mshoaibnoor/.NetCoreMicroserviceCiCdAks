@@ -1,47 +1,57 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+# # ASP.NET Core
+# # Build and test ASP.NET Core projects targeting .NET Core.
+# # Add steps that run tests, create a NuGet package, deploy, and more:
+# # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
+name : NetCore-CustomerApi-CI
 trigger:
-- master
-
+  branches:
+    include:
+      - master
+  paths:
+    include: # # trigger only if there is a change in CustomerApi folder
+      - CustomerApi/*   
+ 
 pool:
-  vmImage: ubuntu-latest
-
+  vmImage: 'windows-latest' # select windows as the agent
+ 
 variables:
   buildConfiguration: 'Release'
+ 
 steps:
-- task: DotNetCoreCLI@2
+# # Install all package dependencies to the correct state matching the package references in your project file (.csproj)
+- task: DotNetCoreCLI@2  
   inputs:
     command: 'restore'
-    projects: '**/*.csproj'
-    feedsToUse: 'select'
+    projects: '**/CustomerApi*.csproj'
   displayName: 'Restore Nuget Packages'
+ 
+ # # Build the dot net project with 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '**/*.csproj'
+    projects: '**/CustomerApi*.csproj'
     arguments: '--no-restore'
   displayName: 'Build projects'
+ 
+ # # Run the test cases and generate a coverage report
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
   inputs:
     command: 'test'
     projects: '**/*Test.csproj'
-    arguments: '--no-restore'
-  displayName: 'Run Tests'
-- task: DotNetCoreCLI@2
+    arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./MyCoverage/'
+    publishTestResults: true
+ 
+ # # Publish the coverage report to show it in the summary section
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Code Coverage Results'
   inputs:
-    command: 'publish'
-    publishWebProjects: false
-    projects: '**/*Customer.Api.csproj'
-    arguments: '--configuration $(buildConfiguration) --no-restore'
-    modifyOutputPath: false
-  displayName: 'Publish CustomerApi'
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/TEST-*.xml'
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/MyCoverage/coverage.cobertura.xml'
+    failIfCoverageEmpty: true
+
+# # Create a ZIP of the project 
 - task: ArchiveFiles@2
   displayName: 'Archive files'
   inputs:
@@ -51,9 +61,13 @@ steps:
     archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
     replaceExistingArchive: true
  
+ # # Publish the ZIP folder as an artifact to be used in the release pipeline
 - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
   artifact: drop
-
-
-
+- task: BuildQualityChecks@8
+  inputs:
+    checkCoverage: true
+    coverageFailOption: 'fixed'
+    coverageType: 'lines'
+    coverageThreshold: '70'
 
