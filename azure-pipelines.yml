@@ -49,7 +49,6 @@ steps:
   inputs:
     command: 'test'
     projects: '**/*Test.csproj'
-    arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./MyCoverage/'
     publishTestResults: true
  
  # # Publish the coverage report to show it in the summary section
