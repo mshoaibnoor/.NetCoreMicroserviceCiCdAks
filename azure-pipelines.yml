@@ -47,13 +47,9 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: '**/*Test.csproj'
+    projects: '**/Test*.csproj'
     arguments: '--no-restore --no-build'
   displayName: 'Run Tests'
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/TEST-*.xml'
  
  # # Publish the coverage report to show it in the summary section
 - task: PublishCodeCoverageResults@1
