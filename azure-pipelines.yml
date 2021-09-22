@@ -14,7 +14,7 @@ trigger:
  
 pool:
   name: 'Default'
-  vmImage: 'ucd-machine' # select windows as the agent
+  vmImage: 'ucd-machine' 
  
 variables:
   buildConfiguration: 'Release'
