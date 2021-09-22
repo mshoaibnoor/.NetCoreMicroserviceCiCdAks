@@ -49,6 +49,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/*Test.csproj'
+    arguments: '--no-restore'
     publishTestResults: true
  
  # # Publish the coverage report to show it in the summary section
