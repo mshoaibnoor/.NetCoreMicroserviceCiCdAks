@@ -68,9 +68,4 @@ steps:
  # # Publish the ZIP folder as an artifact to be used in the release pipeline
 - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
   artifact: drop
-- task: BuildQualityChecks@8
-  inputs:
-    checkCoverage: true
-    coverageFailOption: 'fixed'
-    coverageType: 'lines'
-    coverageThreshold: '70'
+
