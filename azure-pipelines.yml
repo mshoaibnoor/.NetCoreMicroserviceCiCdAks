@@ -13,8 +13,7 @@ trigger:
       - CustomerApi/*   
  
 pool:
-  name: 'Default'
-  vmImage: 'ucd-machine' 
+  vmImage: 'windows-latest' 
  
 variables:
   buildConfiguration: 'Release'
