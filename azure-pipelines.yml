@@ -18,9 +18,13 @@ pool:
  
 variables:
   buildConfiguration: 'Release'
- 
+
 steps:
 # # Install all package dependencies to the correct state matching the package references in your project file (.csproj)
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.1'
 - task: DotNetCoreCLI@2 
   inputs:
     command: 'restore'
