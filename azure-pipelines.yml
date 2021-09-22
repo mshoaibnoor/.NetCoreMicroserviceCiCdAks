@@ -13,7 +13,8 @@ trigger:
       - CustomerApi/*   
  
 pool:
-  vmImage: 'windows-latest' # select windows as the agent
+  name: 'Default'
+  vmImage: 'ucd-machine' # select windows as the agent
  
 variables:
   buildConfiguration: 'Release'
