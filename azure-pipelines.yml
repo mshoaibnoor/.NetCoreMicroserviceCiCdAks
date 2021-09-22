@@ -51,13 +51,7 @@ steps:
     arguments: '--no-restore --no-build'
   displayName: 'Run Tests'
  
- # # Publish the coverage report to show it in the summary section
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish Code Coverage Results'
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Build.SourcesDirectory)/**/MyCoverage/coverage.cobertura.xml'
-    failIfCoverageEmpty: true
+
 
 # # Create a ZIP of the project 
 - task: ArchiveFiles@2
