@@ -19,25 +19,17 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'restore'
-    projects: '**/*.csproj'
-    feedsToUse: 'select'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
 # # Install all package dependencies to the correct state matching the package references in your project file (.csproj)
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
     version: '5.0.401'
-- task: DotNetCoreCLI@2 
+- task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
     projects: '**/CustomerApi*.csproj'
   displayName: 'Restore Nuget Packages'
+
  
  # # Build the dot net project with 
 - task: DotNetCoreCLI@2
