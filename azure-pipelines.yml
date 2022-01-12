@@ -20,10 +20,6 @@ variables:
 
 steps:
 # # Install all package dependencies to the correct state matching the package references in your project file (.csproj)
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '5.0.401'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'restore'
@@ -41,9 +37,6 @@ steps:
  
  # # Run the test cases and generate a coverage report
 
-- task: CmdLine@2
-  inputs:
-    script: 'ls'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
