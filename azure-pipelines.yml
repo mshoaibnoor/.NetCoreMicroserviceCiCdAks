@@ -47,9 +47,10 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
-    projects: '**/Test/*.csproj'
-    arguments: '--no-restore --no-build'
-  displayName: 'Run Tests'
+    projects: '**/Test*.csproj'
+    arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./MyCoverage/'
+    publishTestResults: true
+  displayName: 'dotnet test'
  
 - task: PublishCodeCoverageResults@1
   inputs:
