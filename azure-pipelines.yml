@@ -53,10 +53,12 @@ steps:
   displayName: 'dotnet test'
  
 - task: PublishCodeCoverageResults@1
+  displayName: 'Publish Code Coverage Results'
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '''$(System.DefaultWorkingDirectory)/**/*coverage.xml'''
-    reportDirectory: '''$(System.DefaultWorkingDirectory)**/coverage'''
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/MyCoverage/coverage.cobertura.xml'
+    failIfCoverageEmpty: true
+    
 
 # # Create a ZIP of the project 
 - task: ArchiveFiles@2
