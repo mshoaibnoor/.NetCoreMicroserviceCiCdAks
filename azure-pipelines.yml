@@ -51,7 +51,11 @@ steps:
     arguments: '--no-restore --no-build'
   displayName: 'Run Tests'
  
-
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '''$(System.DefaultWorkingDirectory)/**/*coverage.xml'''
+    reportDirectory: '''$(System.DefaultWorkingDirectory)**/coverage'''
 
 # # Create a ZIP of the project 
 - task: ArchiveFiles@2
